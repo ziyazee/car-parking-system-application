@@ -19,9 +19,9 @@ package com.example.hp.carparkingbangalore;
         import android.widget.RelativeLayout;
         import android.widget.Toast;
 
-public class CarParking extends AppCompatActivity {
+public class CarParking extends AppCompatActivity implements View.OnClickListener{
     Database mydb;
-    Button b1,b,b2,b3,b4,b5,b6,b7,b8,b9,b10,bd,bdl;
+    Button b1,b,b2,b3,b4,b5,b6,b7,b8,b9,b10,bd,bdl,bb;
     AbsoluteLayout line;
     EditText editText,name,contact;
 
@@ -43,6 +43,16 @@ public class CarParking extends AppCompatActivity {
         b8 = (Button) findViewById(R.id.button8);
         b9 = (Button) findViewById(R.id.button9);
         b10 = (Button) findViewById(R.id.button10);
+        b1.setOnClickListener(this);
+        b2.setOnClickListener(this);
+        b3.setOnClickListener(this);
+        b4.setOnClickListener(this);
+        b5.setOnClickListener(this);
+        b6.setOnClickListener(this);
+        b7.setOnClickListener(this);
+        b8.setOnClickListener(this);
+        b9.setOnClickListener(this);
+        b10.setOnClickListener(this);
 
 
         bd = (Button) findViewById(R.id.buttondisplay);
@@ -56,7 +66,6 @@ public class CarParking extends AppCompatActivity {
 
         //here you cna change the color submit button
         b.setBackgroundColor(Color.CYAN);
-
 
 
         line = (AbsoluteLayout) findViewById(R.id.line);
@@ -77,493 +86,69 @@ public class CarParking extends AppCompatActivity {
 
 
 
-        //slot1
-        b1.setOnClickListener(new View.OnClickListener() {
+
+
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        bb=(Button)findViewById((v.getId()));
+        String str = bb.getText().toString();
+        char n=str.charAt(str.length() - 1);
+        String x=Character.toString(n);
+        if(x.equals("0"))
+            x="1"+x;
+        else
+            x=""+x;
+        final String nn=x;
+
+        int z=Character.getNumericValue(n);
+        if(z==0)
+            z=z+10;
+        final int  zz=z;
+        Cursor res = mydb.getData();
+        while (res.moveToNext()) {
+            String g = res.getString(1);
+            if (g.equals(nn)) {
+                Toast.makeText(CarParking.this, "Slot is not empty", Toast.LENGTH_LONG).show();
+                // b.setVisibility(View.GONE);
+
+                return;
+            }
+        }
+        // b.setBackgroundColor(Color.BLUE);
+        editText.setVisibility(View.VISIBLE);
+        name.setVisibility(View.VISIBLE);
+        contact.setVisibility(View.VISIBLE);
+
+
+        b.setVisibility(View.VISIBLE);
+
+        b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor res=mydb.getData();
-                while (res.moveToNext()) {
-                    String g = res.getString(1);
-                    if (g.equals("1")){
-                        Toast.makeText(CarParking.this, "Slot is not empty", Toast.LENGTH_LONG).show();
-                       // b.setVisibility(View.GONE);
+                boolean isInserted = mydb.insertData(zz, editText.getText().toString(), name.getText().toString(), contact.getText().toString());
 
-                        return;
-                    }
-                }
-                // b.setBackgroundColor(Color.BLUE);
-                editText.setVisibility(View.VISIBLE);
-                name.setVisibility(View.VISIBLE);
-                contact.setVisibility(View.VISIBLE);
+                if (isInserted = true)
+
+                    Toast.makeText(CarParking.this, "data inserted", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(CarParking.this, "data not inserted", Toast.LENGTH_LONG).show();
+                editText.setText("");
+                name.setText("");
+                contact.setText("");
+                //b1.setBackgroundColor(Color.RED);
+                b.setVisibility(View.GONE);
+                editText.setVisibility(View.GONE);
+                name.setVisibility(View.GONE);
+                contact.setVisibility(View.GONE);
+                view();
 
 
-                b.setVisibility(View.VISIBLE);
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        boolean isInserted = mydb.insertData(1,editText.getText().toString(),name.getText().toString(),contact.getText().toString());
-
-                        if (isInserted = true)
-
-                            Toast.makeText(CarParking.this, "data inserted", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(CarParking.this, "data not inserted", Toast.LENGTH_LONG).show();
-                        editText.setText("");
-                        name.setText("");
-                        contact.setText("");
-                        //b1.setBackgroundColor(Color.RED);
-                        b.setVisibility(View.GONE);
-                        editText.setVisibility(View.GONE);
-                        name.setVisibility(View.GONE);
-                        contact.setVisibility(View.GONE);
-                        view();
-
-                    }
-                });
             }
         });
 
-
-        //slot2
-        b2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cursor res=mydb.getData();
-                while (res.moveToNext()) {
-                    String g = res.getString(1);
-                    if (g.equals("2")){
-                        Toast.makeText(CarParking.this, "Slot is not empty", Toast.LENGTH_LONG).show();
-                        // b.setVisibility(View.GONE);
-
-                        return;
-                    }
-                }
-                // b.setBackgroundColor(Color.BLUE);
-                editText.setVisibility(View.VISIBLE);
-                name.setVisibility(View.VISIBLE);
-                contact.setVisibility(View.VISIBLE);
-                b.setVisibility(View.VISIBLE);
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        boolean isInserted = mydb.insertData(2,editText.getText().toString(),name.getText().toString(),contact.getText().toString());
-
-
-                        if (isInserted = true)
-
-                            Toast.makeText(CarParking.this, "data inserted", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(CarParking.this, "data not inserted", Toast.LENGTH_LONG).show();
-                        editText.setText("");
-                        name.setText("");
-                        contact.setText("");
-                        //b1.setBackgroundColor(Color.RED);
-                        b.setVisibility(View.GONE);
-                        editText.setVisibility(View.GONE);
-                        name.setVisibility(View.GONE);
-                        contact.setVisibility(View.GONE);
-                        view();
-
-                    }
-                });
-            }
-        });
-
-
-
-        //slot3
-
-
-        b3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cursor res=mydb.getData();
-                while (res.moveToNext()) {
-                    String g = res.getString(1);
-                    if (g.equals("3")){
-                        Toast.makeText(CarParking.this, "Slot is not empty", Toast.LENGTH_LONG).show();
-                        // b.setVisibility(View.GONE);
-
-                        return;
-                    }
-                }
-                b.setVisibility(View.VISIBLE);
-
-                // b.setBackgroundColor(Color.BLUE);
-                editText.setVisibility(View.VISIBLE);
-                name.setVisibility(View.VISIBLE);
-                contact.setVisibility(View.VISIBLE);
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        boolean isInserted = mydb.insertData(3,editText.getText().toString(),name.getText().toString(),contact.getText().toString());
-
-
-                        if (isInserted = true)
-
-                            Toast.makeText(CarParking.this, "data inserted", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(CarParking.this, "data not inserted", Toast.LENGTH_LONG).show();
-                        editText.setText("");
-                        name.setText("");
-                        contact.setText("");
-                        //b1.setBackgroundColor(Color.RED);
-                        name.setVisibility(View.GONE);
-                        contact.setVisibility(View.GONE);
-                        b.setVisibility(View.GONE);
-                        editText.setVisibility(View.GONE);
-                        view();
-
-                    }
-                });
-            }
-        });
-
-
-
-
-        //slot 4
-
-
-
-        b4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cursor res=mydb.getData();
-                while (res.moveToNext()) {
-                    String g = res.getString(1);
-                    if (g.equals("4")){
-                        Toast.makeText(CarParking.this, "Slot is not empty", Toast.LENGTH_LONG).show();
-                        // b.setVisibility(View.GONE);
-
-                        return;
-                    }
-                }
-                b.setVisibility(View.VISIBLE);
-                // b.setBackgroundColor(Color.BLUE);
-                editText.setVisibility(View.VISIBLE);
-                name.setVisibility(View.VISIBLE);
-                contact.setVisibility(View.VISIBLE);
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        boolean isInserted = mydb.insertData(4,editText.getText().toString(),name.getText().toString(),contact.getText().toString());
-
-
-                        if (isInserted = true)
-
-                            Toast.makeText(CarParking.this, "data inserted", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(CarParking.this, "data not inserted", Toast.LENGTH_LONG).show();
-                        editText.setText("");
-                        name.setText("");
-                        contact.setText("");
-                        name.setVisibility(View.GONE);
-                        contact.setVisibility(View.GONE);                        //b1.setBackgroundColor(Color.RED);
-                        b.setVisibility(View.GONE);
-                        editText.setVisibility(View.GONE);
-                        view();
-
-                    }
-                });
-            }
-        });
-
-
-        //slot 5
-
-
-        b5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cursor res=mydb.getData();
-                while (res.moveToNext()) {
-                    String g = res.getString(1);
-                    if (g.equals("5")){
-                        Toast.makeText(CarParking.this, "Slot is not empty", Toast.LENGTH_LONG).show();
-                        // b.setVisibility(View.GONE);
-
-                        return;
-                    }
-                }
-                b.setVisibility(View.VISIBLE);
-                // b.setBackgroundColor(Color.BLUE);
-                editText.setVisibility(View.VISIBLE);
-                name.setVisibility(View.VISIBLE);
-                contact.setVisibility(View.VISIBLE);
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        boolean isInserted = mydb.insertData(5,editText.getText().toString(),name.getText().toString(),contact.getText().toString());
-
-
-                        if (isInserted = true)
-
-                            Toast.makeText(CarParking.this, "data inserted", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(CarParking.this, "data not inserted", Toast.LENGTH_LONG).show();
-                        editText.setText("");
-                        name.setText("");
-                        contact.setText("");
-                        //b1.setBackgroundColor(Color.RED);
-                        name.setVisibility(View.GONE);
-                        contact.setVisibility(View.GONE);
-                        b.setVisibility(View.GONE);
-                        editText.setVisibility(View.GONE);
-                        view();
-
-                    }
-                });
-            }
-        });
-
-
-
-        //slot 6
-
-
-        b6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cursor res=mydb.getData();
-                while (res.moveToNext()) {
-                    String g = res.getString(1);
-                    if (g.equals("6")){
-                        Toast.makeText(CarParking.this, "Slot is not empty", Toast.LENGTH_LONG).show();
-                        // b.setVisibility(View.GONE);
-
-                        return;
-                    }
-                }
-                b.setVisibility(View.VISIBLE);
-                // b.setBackgroundColor(Color.BLUE);
-                editText.setVisibility(View.VISIBLE);
-                name.setVisibility(View.VISIBLE);
-                contact.setVisibility(View.VISIBLE);
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        boolean isInserted = mydb.insertData(6,editText.getText().toString(),name.getText().toString(),contact.getText().toString());
-
-
-                        if (isInserted = true)
-
-                            Toast.makeText(CarParking.this, "data inserted", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(CarParking.this, "data not inserted", Toast.LENGTH_LONG).show();
-                        editText.setText("");
-                        name.setText("");
-                        contact.setText("");
-                        //b1.setBackgroundColor(Color.RED);
-                        b.setVisibility(View.GONE);
-                        editText.setVisibility(View.GONE);
-                        name.setVisibility(View.GONE);
-                        contact.setVisibility(View.GONE);
-                        view();
-
-                    }
-                });
-            }
-        });
-        //slot 7
-
-
-        b7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cursor res=mydb.getData();
-                while (res.moveToNext()) {
-                    String g = res.getString(1);
-                    if (g.equals("7")){
-                        Toast.makeText(CarParking.this, "Slot is not empty", Toast.LENGTH_LONG).show();
-                        // b.setVisibility(View.GONE);
-
-                        return;
-                    }
-                }
-                b.setVisibility(View.VISIBLE);
-                // b.setBackgroundColor(Color.BLUE);
-                editText.setVisibility(View.VISIBLE);
-                name.setVisibility(View.VISIBLE);
-                contact.setVisibility(View.VISIBLE);
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        boolean isInserted = mydb.insertData(7,editText.getText().toString(),name.getText().toString(),contact.getText().toString());
-
-
-                        if (isInserted = true)
-
-                            Toast.makeText(CarParking.this, "data inserted", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(CarParking.this, "data not inserted", Toast.LENGTH_LONG).show();
-                        editText.setText("");
-                        name.setText("");
-                        contact.setText("");
-                        //b1.setBackgroundColor(Color.RED);
-                        b.setVisibility(View.GONE);
-                        name.setVisibility(View.GONE);
-                        contact.setVisibility(View.GONE);
-                        editText.setVisibility(View.GONE);
-                        view();
-
-                    }
-                });
-            }
-        });
-        //slot8
-
-
-        b8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // b.setBackgroundColor(Color.BLUE);
-                Cursor res=mydb.getData();
-                while (res.moveToNext()) {
-                    String g = res.getString(1);
-                    if (g.equals("8")){
-                        Toast.makeText(CarParking.this, "Slot is not empty", Toast.LENGTH_LONG).show();
-                        // b.setVisibility(View.GONE);
-
-                        return;
-                    }
-                }
-                b.setVisibility(View.VISIBLE);
-
-                // b.setBackgroundColor(Color.BLUE);
-                editText.setVisibility(View.VISIBLE);
-                name.setVisibility(View.VISIBLE);
-                contact.setVisibility(View.VISIBLE);
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        boolean isInserted = mydb.insertData(8,editText.getText().toString(),name.getText().toString(),contact.getText().toString());
-
-
-                        if (isInserted = true)
-
-                            Toast.makeText(CarParking.this, "data inserted", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(CarParking.this, "data not inserted", Toast.LENGTH_LONG).show();
-                        editText.setText("");
-                        name.setText("");
-                        contact.setText("");
-                        //b1.setBackgroundColor(Color.RED);
-                        name.setVisibility(View.GONE);
-                        contact.setVisibility(View.GONE);
-                        b.setVisibility(View.GONE);
-                        editText.setVisibility(View.GONE);
-                        view();
-
-                    }
-                });
-            }
-        });
-        //slot 9
-
-
-        b9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // b.setBackgroundColor(Color.BLUE);
-                Cursor res=mydb.getData();
-                while (res.moveToNext()) {
-                    String g = res.getString(1);
-                    if (g.equals("9")){
-                        Toast.makeText(CarParking.this, "Slot is not empty", Toast.LENGTH_LONG).show();
-                        // b.setVisibility(View.GONE);
-
-                        return;
-                    }
-                }
-
-                b.setVisibility(View.VISIBLE);
-                // b.setBackgroundColor(Color.BLUE);
-                editText.setVisibility(View.VISIBLE);
-                name.setVisibility(View.VISIBLE);
-                contact.setVisibility(View.VISIBLE);
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        boolean isInserted = mydb.insertData(9,editText.getText().toString(),name.getText().toString(),contact.getText().toString());
-
-
-                        if (isInserted = true)
-
-                            Toast.makeText(CarParking.this, "data inserted", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(CarParking.this, "data not inserted", Toast.LENGTH_LONG).show();
-                        editText.setText("");
-                        name.setText("");
-                        contact.setText("");
-                        //b1.setBackgroundColor(Color.RED);
-                        name.setVisibility(View.GONE);
-                        contact.setVisibility(View.GONE);
-                        b.setVisibility(View.GONE);
-                        editText.setVisibility(View.GONE);
-                        view();
-
-                    }
-                });
-            }
-        });
-        //slot 10
-
-
-        b10.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // b.setBackgroundColor(Color.BLUE);
-                Cursor res=mydb.getData();
-                while (res.moveToNext()) {
-                    String g = res.getString(1);
-                    if (g.equals("10")){
-                        Toast.makeText(CarParking.this, "Slot is not empty", Toast.LENGTH_LONG).show();
-                        // b.setVisibility(View.GONE);
-
-                        return;
-                    }
-                }
-                b.setVisibility(View.VISIBLE);
-                // b.setBackgroundColor(Color.BLUE);
-                editText.setVisibility(View.VISIBLE);
-                name.setVisibility(View.VISIBLE);
-                contact.setVisibility(View.VISIBLE);
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        boolean isInserted = mydb.insertData(10,editText.getText().toString(),name.getText().toString(),contact.getText().toString());
-
-
-                        if (isInserted = true)
-
-                            Toast.makeText(CarParking.this, "data inserted", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(CarParking.this, "data not inserted", Toast.LENGTH_LONG).show();
-                        editText.setText("");
-                        name.setText("");
-                        contact.setText("");
-                        //b1.setBackgroundColor(Color.RED);
-                        name.setVisibility(View.GONE);
-                        contact.setVisibility(View.GONE);
-                        b.setVisibility(View.GONE);
-                        editText.setVisibility(View.GONE);
-                        view();
-
-                    }
-                });
-            }
-        });
 
 
         view();
@@ -602,7 +187,7 @@ public class CarParking extends AppCompatActivity {
             public void onClick(View v) {
                 Cursor res=mydb.getData();
                 if(res.getCount() == 0){
-                    show("data","none has booked the slot");
+                    show("data","No recent activity");
                     return;
                 }
                 StringBuffer sb=new StringBuffer();
